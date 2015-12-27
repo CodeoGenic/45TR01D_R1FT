@@ -3,14 +3,14 @@ using System.Collections;
 
 public class Damage : MonoBehaviour {
 	
-    public PickUps pickups;// the script needs to be refrenced Marcus - 09/06/15
+    //public PickUps pickups;// the script needs to be refrenced Marcus - 09/06/15
     // Andrew 8/6/2015
-    //public HealthScript health;// refrence health script Marcus - 15/06/2015
+    public HealthScript health;// refrence health script Marcus - 15/06/2015
 	private int asteroidDamage = 500;
 	public Animator anim;
 	void Awake(){
-		pickups = GetComponent<PickUps>();//this is how you refrence the script Marcus - 09/06/15
-		//health = GetComponent<HealthScript>();
+		//pickups = GetComponent<PickUps>();//this is how you refrence the script Marcus - 09/06/15
+		health = GetComponent<HealthScript>();
 	}
 	void OnTriggerEnter(Collider item)
 	{
@@ -19,11 +19,12 @@ public class Damage : MonoBehaviour {
 			anim.SetBool("Idel",false);
 			anim.SetTrigger("Impact");//set of the Impact anim on collision with asteroid - marcus - 15/06/2015
 			//doDamage();
-			pickups.healthChange();
+			health.ApplyDamage(asteroidDamage);
 			Invoke("startAnimation",1.5f);
-			pickups.health -= 10;  // change the health 
-            Debug.Log(pickups.health); 
-			if (pickups.health <= 0)// if the health is 0
+		 
+           // Debug.Log(health.GetHealth);
+
+			if ( health.GetHealth() <= 0)// if the health is 0
 			{
 				Debug.Log("Game Over");
 
